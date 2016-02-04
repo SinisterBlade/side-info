@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLProtocolException;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -18,7 +19,7 @@ import org.jsoup.select.Elements;
 public class DocumentScraper {
 	private String url;
 	private Document document;
-	public DocumentScraper(String url) throws UnknownHostException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
+	public DocumentScraper(String url) throws UnknownHostException, SSLProtocolException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
 		this.url = url;
 		this.document = Jsoup.connect(url).userAgent("Chrome").get();
 	}

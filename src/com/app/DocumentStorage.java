@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLProtocolException;
 
 import org.jsoup.HttpStatusException;
 
@@ -29,6 +30,7 @@ public class DocumentStorage {
 						DocumentScraper ds = new DocumentScraper(url);
 						String content = ds.getFirstParagraph();
 						if (content != null) {
+							content = content.toLowerCase();
 							dao.addLink(url, content, refid);
 							int id = dao.getId(url);
 							System.out.println("Added link: " + url);
@@ -36,7 +38,7 @@ public class DocumentStorage {
 							getAndStore(id, subLinks, depth - 1);
 						}
 						else {
-							System.out.println("Content null: " + url);
+							System.err.println("Content null: " + url);
 						}
 					}
 					catch (HttpStatusException e) {
@@ -50,6 +52,9 @@ public class DocumentStorage {
 					}
 					catch (UnknownHostException e) {
 						System.err.println("Unknown Host: " + url);
+					}
+					catch (SSLProtocolException e) {
+						System.err.println("SSL Protocol Exception: " + url);
 					}
 				}
 				else {

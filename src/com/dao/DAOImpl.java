@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import oracle.sql.NCLOB;
 
 public class DAOImpl implements DAOInterface {
 	Connection con;
@@ -95,11 +94,51 @@ public class DAOImpl implements DAOInterface {
 		}
 	}
 	
-	public void getContent(int id) {
-		//TODO
-		
-		//System.out.println(myClob.length());
-		//System.out.println(myClob.getSubString(1, (int) myClob.length()));
+	@Override
+	public ResultSet getAllContent() {
+		try {
+			PreparedStatement ps = con.prepareStatement("select id, content from links order by id");
+			ResultSet rs = ps.executeQuery();
+			return rs;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public int getFrequency(String term) {
+		try {
+			int frequency = 0;
+			PreparedStatement ps = con.prepareStatement("select count(*) from links where content like \'%" + term + "%\'");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				frequency = rs.getInt(1);
+			}
+			return frequency;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	@Override
+	public int countDocuments() {
+		try {
+			PreparedStatement ps = con.prepareStatement("select count(*) from links");
+			ResultSet rs = ps.executeQuery();
+			int count = 0;
+			while(rs.next()) {
+				count = rs.getInt(1);
+			}
+			return count;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
 	}
 	
 }
