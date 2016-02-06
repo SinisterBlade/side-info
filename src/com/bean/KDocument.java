@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class KDocument {
 	private int id;
 	private HashMap<String, Double> tfIdf;
+	private int clusterID;
 	
 	public KDocument(int id) {
 		// TODO Auto-generated constructor stub
@@ -24,5 +25,15 @@ public class KDocument {
 	public void setTfIdf(HashMap<String, Double> tfIdf) {
 		this.tfIdf = tfIdf;
 	}
+
+	public int getClusterID() {
+		return clusterID;
+	}
+
+	public void setClusterID(int clusterID) {
+		this.clusterID = clusterID;
+	}
+	
+	
 	
 }
