@@ -6,10 +6,10 @@ import java.util.HashMap;
 import com.bean.KDocument;
 
 public class Cluster {
-	int id;
-	ArrayList<KDocument> documents;
-	HashMap<String, Double> centroid;
-	ArrayList<String> vectors;
+	private int id;
+	private ArrayList<KDocument> documents;
+	private HashMap<String, Double> centroid;
+	private ArrayList<String> vectors;
 	
 	public Cluster(int id, ArrayList<String> vectors) {
 		this.documents = new ArrayList<KDocument>();
@@ -20,7 +20,7 @@ public class Cluster {
 	
 	public void addDocument(KDocument doc) {
 		documents.add(doc);
-		System.out.println("Added document " + doc.getId() + " to cluster " + id);
+		//System.out.println("Added document " + doc.getId() + " to cluster " + id);
 	}
 	
 	public void removeDocument(int docID) {
@@ -28,7 +28,7 @@ public class Cluster {
 		for (KDocument d : documents) {
 			if(d.getId() == docID) {
 				isRemoved = documents.remove(d);
-				System.out.println("Removed document " + docID + " from cluster " + id);
+				//System.out.println("Removed document " + docID + " from cluster " + id);
 				break;
 			}
 		}
@@ -39,16 +39,43 @@ public class Cluster {
 	
 	public void calculateCentroid() {
 		int size = documents.size();
-		for(String term : vectors) {
-			double value = 0;
-			for (KDocument doc : documents) {
-				value += doc.getTfIdf().get(term);
+		if(size > 0) {
+			for(String term : vectors) {
+				double value = 0;
+				for (KDocument doc : documents) {
+					value += doc.getTfIdf().get(term);
+				}
+				//System.out.println("Total " + term + ": " + value);
+				value /= size;
+				centroid.put(term, value);
+				//System.out.println("Centroid " + term + ": " + value);
 			}
-			System.out.println("Total " + term + ": " + value);
-			value /= size;
-			centroid.put(term, value);
-			System.out.println("Centroid " + term + ": " + value);
+		}
+		else {
+			for(String term : vectors) {
+				centroid.put(term, 0.0);
+			}
 		}
 	}
+	
+	public void listDocuments() {
+		System.out.println("Cluster " + id + ":");
+		for(KDocument doc : documents) {
+			System.out.println("  " + doc.getId());
+		}
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public HashMap<String, Double> getCentroid() {
+		return centroid;
+	}
+	
 	
 }
