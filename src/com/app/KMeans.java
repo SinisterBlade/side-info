@@ -26,6 +26,7 @@ public class KMeans {
 	
 	public ArrayList<Cluster> startKMeaning() {
 		initialize();
+		//printClusters();
 		int iteration = 0;
 		boolean converged = false;
 		while(!converged) {
@@ -37,7 +38,7 @@ public class KMeans {
 	
 	//Initialisation Method: Random Partition
 	private void initialize() {
-		int documentsInEachCluster = totalDocuments / k;
+		int documentsInEachCluster = (totalDocuments / k) + 1;
 		Iterator<KDocument> iter = docList.iterator();
 		for(int i = 1; i <= k; i++) {
 			Cluster cluster = new Cluster(i, vectors);

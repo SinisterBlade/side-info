@@ -31,14 +31,21 @@ public class KDocFactory {
 			count++;
 		}
 		int totalWords = content.trim().split("\\s+").length;
+		//System.out.println("Total: " + totalWords);
 		double tf = (double) count / totalWords;
+		//System.out.println("TF: " + tf);
 		return tf;
 	}
 	
 	public double getIDF(String term) {
 		int frequency = dao.getFrequency(term);
+		//System.out.println("Frequency " + term + ": " + frequency);
+		if(frequency == 0) {
+			return 0;
+		}
 		int total = dao.countDocuments();
 		double idf = Math.log((double) total / frequency);
+		System.out.println(term + " IDF: " + idf);
 		return idf;
 	}
 	
