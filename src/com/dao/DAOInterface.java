@@ -10,4 +10,5 @@ public interface DAOInterface {
 	public ResultSet getAllContent();
 	public int getFrequency(String term);
 	public int countDocuments();
+	public String getURL(int id);
 }

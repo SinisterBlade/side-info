@@ -133,11 +133,31 @@ public class DAOImpl implements DAOInterface {
 			while(rs.next()) {
 				count = rs.getInt(1);
 			}
+			rs.close();
+			ps.close();
 			return count;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 			return -1;
+		}
+	}
+	
+	@Override
+	public String getURL(int id) {
+		try {
+			PreparedStatement ps = con.prepareStatement("select url from links where id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String url = rs.getString(1);
+				return url;
+			}
+			return null;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

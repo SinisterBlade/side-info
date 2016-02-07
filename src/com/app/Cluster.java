@@ -76,6 +76,10 @@ public class Cluster {
 	public HashMap<String, Double> getCentroid() {
 		return centroid;
 	}
+
+	public ArrayList<KDocument> getDocuments() {
+		return documents;
+	}
 	
 	
 }

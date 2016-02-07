@@ -41,11 +41,12 @@ public class KDocFactory {
 		int frequency = dao.getFrequency(term);
 		//System.out.println("Frequency " + term + ": " + frequency);
 		if(frequency == 0) {
+			//System.out.println(term + " IDF: " + 0.0);
 			return 0;
 		}
 		int total = dao.countDocuments();
 		double idf = Math.log((double) total / frequency);
-		System.out.println(term + " IDF: " + idf);
+		//System.out.println(term + " IDF: " + idf);
 		return idf;
 	}
 	

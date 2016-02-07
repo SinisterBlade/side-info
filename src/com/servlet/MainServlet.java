@@ -45,10 +45,12 @@ public class MainServlet extends HttpServlet {
 		ArrayList<Cluster> clusters = km.startKMeaning();
 		System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
-			c.listDocuments();
+			System.out.println("Cluster " + c.getId() + ":");
+			ArrayList<KDocument> documents = c.getDocuments();
+			for(KDocument doc : documents) {
+				System.out.println(dao.getURL(doc.getId()));
+			}
 		}
-		
-		
 	}
 	
 	@Override
