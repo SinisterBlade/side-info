@@ -151,8 +151,12 @@ public class DAOImpl implements DAOInterface {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				String url = rs.getString(1);
+				rs.close();
+				ps.close();
 				return url;
 			}
+			rs.close();
+			ps.close();
 			return null;
 		}
 		catch(SQLException e) {

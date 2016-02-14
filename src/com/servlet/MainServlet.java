@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("In Main Servlet");
 		PrintWriter out = resp.getWriter();
 		String query = req.getParameter("query");
+		req.setAttribute("dao", dao);
 		dao.clearTable();
 		GoogleLinkRetriever retriever = new GoogleLinkRetriever();
 		ArrayList<String> links = retriever.getLinks(query);
@@ -43,14 +46,17 @@ public class MainServlet extends HttpServlet {
 		ArrayList<KDocument> docList = factory.getKDocs();
 		KMeans km = new KMeans(vectors.size(), docList, vectors);
 		ArrayList<Cluster> clusters = km.startKMeaning();
-		System.out.println("Final clusters:");
+		req.setAttribute("clusters", clusters);
+		/*System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
 			System.out.println("Cluster " + c.getId() + ":");
 			ArrayList<KDocument> documents = c.getDocuments();
 			for(KDocument doc : documents) {
 				System.out.println(dao.getURL(doc.getId()));
 			}
-		}
+		}*/
+		RequestDispatcher rd = req.getRequestDispatcher("result.jsp");
+		rd.forward(req, resp);
 	}
 	
 	@Override
