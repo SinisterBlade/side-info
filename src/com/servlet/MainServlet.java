@@ -36,11 +36,11 @@ public class MainServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		String query = req.getParameter("query");
 		req.setAttribute("dao", dao);
-		dao.clearTable();
+		/*dao.clearTable();
 		GoogleLinkRetriever retriever = new GoogleLinkRetriever();
 		ArrayList<String> links = retriever.getLinks(query);
 		DocumentStorage dStorage = new DocumentStorage(dao);
-		dStorage.getAndStore(0, links, 3);
+		dStorage.getAndStore(0, links, 3);*/
 		ArrayList<String> vectors = (ArrayList<String>) new VectorSpaceCreator(query).getVectorSpace();
 		KDocFactory factory = new KDocFactory(dao, vectors);
 		ArrayList<KDocument> docList = factory.getKDocs();
