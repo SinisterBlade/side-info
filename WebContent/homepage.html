@@ -43,6 +43,9 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
 	<style type="text/css">
 
 		body {
@@ -129,7 +132,7 @@
 			font-family: Montserrat, sans-serif;
 			margin-bottom: 0;
 			background-color: #f4511e;
-			z-index: 9999;
+			z-index: 10;
 			border: 0;
 			font-size: 12px !important;
 			line-height: 1.42857143 !important;
@@ -148,13 +151,46 @@
 
 		.navbar-default .navbar-toggle {
 			border-color: transparent;
-			color: #fff !importantl
+			color: #fff !important;
+		}
+
+		.icon-bar {
+			color: #fff !important;
+			background-color: #fff !important;
 		}
 
 		footer .glyphicon {
 			font-size: 20px;
 			margin-bottom: 20px;
 			color: #f4511e;
+		}
+
+		#loading {
+			display: none;
+			z-index: 30;
+		}
+		
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 20;
+			background-color: rgba(0,0,0,0.9);
+			visibility: hidden;
+		}
+
+		.modal {
+			width: 50%;
+			height: 50%;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			z-index: 30;
+			background-color: #f4511e;
+			text-align: center;
+			transform: translate(-50%, -50%);
 		}
 
 	</style>
@@ -183,26 +219,40 @@
 		</div>
 	</nav>
 
+<!-- 	<div class="overlay"></div>
+	<div class="modal">
+	</div> -->
+
 	<div class="jumbotron text-center">
-	<h1>Orange Juice!</h1>
-	<p>The all new Search Engine</p>
-	<form class="form-inline" method="post" action="mainservlet">
-		<input type="search" class="form-control" size="50" placeholder="Search" name="query" />
-		<input type="submit" class="btn btn-danger" value="Search" />
-	</form>
+		<h1>Orange Juice!</h1>
+		<p>The all new Search Engine</p>
+		<form class="form-inline" method="post" id="query-form" action="mainservlet">
+			<input type="search" class="form-control" size="50" placeholder="Search" name="query" required />
+			<input type="submit" class="btn btn-danger" value="Search" />
+		</form>
+		<div id="loading" class="loading">
+			<img src="assets/magnify.svg">
+		</div>
 	</div>
 
 	<div id="about" class="container-fluid">
 		<div class="row">
 			<div class="col-sm-8">
 				<h2>About Orange Juice!</h2>
-				<h4>Lorem ipsum...</h4>
-				<p>Lorem ipsum..</p>
-				<button class="btn btn-default btn-lg">Get in Touch</button>
+				<h4><em>Orange Juice!</em> is a brand new way to browse the internet!</h4>
+				<p>
+					<em>Orange Juice!</em> uses the results of existing Search Engines and combines them with
+					a well renowned clustering algorithm known as K-Means. Unlike traditional Search Engines,
+					<em>Orange Juice!</em> shows links segregated into different <em>clusters</em>. All links
+					within the same cluster can be described to be more similar to each other than links from
+					different clusters. Hence, it goes without saying that users interested in a particular page
+					may benefit from visiting the other links from the cluster.
+				</p>
 			</div>
 			<div class="col-sm-4">
 				<!-- Orange logo here! -->
-				<span class="glyphicon glyphicon-signal logo"></span>
+				<!-- <span class="glyphicon glyphicon-signal logo"></span> -->
+				<img src="assets/orange-slice.png" alt="Orange Juice logo" width="200px">
 			</div>
 		</div>
 	</div>
@@ -210,12 +260,18 @@
 	<div id="values" class="container-fluid bg-grey">
 		<div class="row">
 			<div class="col-sm-4">
-				<span class="glyphicon glyphicon-globe logo"></span>
+				<span class="glyphicon glyphicon-search logo"></span>
 			</div>
 			<div class="col-sm-8">
 				<h2>Our Values</h2>
-				<h4><strong>MISSION:</strong> Our mission lorem ipsum...</h4>
-				<p><strong>VISION:</strong> Our vision Lorem ipsum...</p>	
+				<h4><strong>MISSION:</strong> Our mission is to provide a novel way to search for information on the Internet.</h4>
+				<p>
+					<strong>VISION:</strong> Our vision stems from the basic motivation to provide users a simpler way to obtain
+					information from the Internet. In order to provide relevant information to the user, we crawl through web pages
+					using an in-depth approach. We use <em>Side Information</em> obtained in the initial seed pages and try to find
+					additional resources. Even though better ways to analyze text data exist such as <em>Natural Language Processing</em>, these are generally very computation heavy. In order to deliver effective results faster, we rely on
+					the methods employed by existing Search Engines and combine it with a fairly fast K Means approach.
+				</p>	
 			</div>
 		</div>
 	</div>
@@ -258,31 +314,40 @@
 	<div id="team" class="container-fluid text-center bg-grey">
 		<div class="row">
 			<div class="">
-				<h2>Our Awesome Team.<br/>Design Lovers.</h2>
-				<h4>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</h4>
+				<h2>Our Awesome Team.</h2>
+				<h4><em>Orange Juice!</em> is a product of the hard work of these gentlemen (and lady!).</h4>
 			</div>
 		</div><!-- /row -->
 		
 		<div class="row text-center">
 			<div class="col-sm-4">
-				<img class="img-circle" src="assets/4.jpg" width="140" alt="">
+				<img class="img-circle" src="assets/rajat.jpg" width="140" alt="Rajat Mutha">
 				<h4>Rajat Mutha</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-				<p><i class="glyphicon glyphicon-send icon" title="Send"></i> <i class="glyphicon glyphicon-phone icon"></i> <i class="glyphicon glyphicon-globe icon"></i></p>
+				<p>
+					Rajat spearheaded the project and designed the application with regard to both structure and aesthetics.
+					Rajat is also responsible for the implementation of the project.
+				</p>
+				<p><i class="glyphicon glyphicon-envelope icon" title="mutharajat@gmail.com"></i> <i class="glyphicon glyphicon-phone icon" title="+919762236671"></i> <i class="fa fa-facebook icon" title="mutharajat"></i></p>
 			</div><!--/col-lg-4 -->
 
 			<div class="col-sm-4">
-				<img class="img-circle" src="assets/orange-slice.png" width="140" alt="">
+				<img class="img-circle" src="assets/omkar.jpg" width="140" alt="Omkar Naidu">
 				<h4>Omkar Naidu</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-				<p><i class="glyphicon glyphicon-send icon" title="Send"></i> <i class="glyphicon glyphicon-phone icon"></i> <i class="glyphicon glyphicon-globe icon"></i></p>
+				<p>
+					Omkar had fun breaking the application time and again during testing (and ensuring that it was fixed).
+					Naturally, if anything breaks after deployment, Omkar is probably the person to blame.
+				</p>
+				<p><i class="glyphicon glyphicon-envelope icon" title="omkarn34@gmail.com"></i> <i class="glyphicon glyphicon-phone icon" title="+919762986351"></i> <i class="fa fa-facebook icon" title="naiduomkar"></i></p>
 			</div><!--/col-lg-4 -->
 
 			<div class="col-sm-4">
-				<img class="img-circle" src="assets/orange-slice.png" width="140" alt="">
+				<img class="img-circle" src="assets/juilee.jpg" width="140" alt="Juilee Kulkarni">
 				<h4>Juilee Kulkarni</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.</p>
-				<p><i class="glyphicon glyphicon-send icon" title="Send"></i> <i class="glyphicon glyphicon-phone icon"></i> <i class="glyphicon glyphicon-globe icon"></i></p>
+				<p>
+					Juilee kept the rest of the team from going insane by carefully documenting every step in our adventure.
+					As expected, the consistency of the application can be attributed to Juilee.
+				</p>
+				<p><i class="glyphicon glyphicon-envelope icon" title="kjuilee94@gmail.com"></i> <i class="glyphicon glyphicon-phone icon" title="+919552757081"></i> <i class="fa fa-facebook icon" title="juilee.kulkarni.5"></i></p>
 			</div><!--/col-lg-4 -->
 		</div><!-- /row -->
 	</div><!-- /container -->
@@ -315,6 +380,12 @@
 		    });
 		  });
 		})
+	</script>
+	<script>
+		$("#query-form").submit(function(event) {
+			//$(".overlay").css("visibility", "visible");
+			$("#loading").css("display", "block");
+		});
 	</script>
 
 </body>

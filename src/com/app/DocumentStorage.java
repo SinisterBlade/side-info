@@ -10,6 +10,7 @@ import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLProtocolException;
 
 import org.jsoup.HttpStatusException;
+import org.jsoup.UnsupportedMimeTypeException;
 
 import com.dao.DAOImpl;
 import com.dao.DAOInterface;
@@ -55,6 +56,9 @@ public class DocumentStorage {
 					}
 					catch (SSLProtocolException e) {
 						System.err.println("SSL Protocol Exception: " + url);
+					}
+					catch (UnsupportedMimeTypeException e) {
+						System.err.println("Unsupported Mime Type: " + url);
 					}
 				}
 				else {

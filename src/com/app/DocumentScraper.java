@@ -12,6 +12,7 @@ import javax.net.ssl.SSLProtocolException;
 
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
+import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,7 +20,7 @@ import org.jsoup.select.Elements;
 public class DocumentScraper {
 	private String url;
 	private Document document;
-	public DocumentScraper(String url) throws UnknownHostException, SSLProtocolException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
+	public DocumentScraper(String url) throws UnsupportedMimeTypeException ,UnknownHostException, SSLProtocolException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
 		this.url = url;
 		this.document = Jsoup.connect(url).userAgent("Chrome").get();
 	}

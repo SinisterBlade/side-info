@@ -214,6 +214,10 @@
 			word-wrap: break-word;
 		}
 
+		.thumb:nth-child(3n+1) {
+			clear: both;
+		}
+
 	</style>
 
 </head>
@@ -253,7 +257,7 @@
 			ArrayList<Cluster> clusters = (ArrayList<Cluster>) request.getAttribute("clusters");
 			for(Cluster c : clusters) {
 			%>
-			<div class="col-lg-4">
+			<div class="col-lg-4 thumb">
 				<div class="panel panel-default text-center">
 					<div class="panel-heading">
 						<h1><%= "Cluster " + c.getId()%></h1>
