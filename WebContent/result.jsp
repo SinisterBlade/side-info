@@ -227,7 +227,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>				
 				</button>
-				<a class="navbar-brand" href="#resultPage">Orange Juice!</a>
+				<a class="navbar-brand" href="homepage.html">Orange Juice!</a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
@@ -290,7 +290,7 @@
 	<script>
 		$(document).ready(function(){
 		  // Add smooth scrolling to all links in navbar + footer link
-		  $(".navbar a, footer a[href='#resultPage']").on('click', function(event) {
+		  $(".navbar-collapse a, footer a[href='#resultPage']").on('click', function(event) {
 
 		    // Prevent default anchor click behavior
 		    event.preventDefault();
