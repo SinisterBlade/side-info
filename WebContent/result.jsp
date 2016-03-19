@@ -260,12 +260,14 @@
 			<% 
 			DAOInterface dao = (DAOInterface) request.getAttribute("dao");
 			ArrayList<Cluster> clusters = (ArrayList<Cluster>) request.getAttribute("clusters");
+			int counter = 0;
 			for(Cluster c : clusters) {
+			counter++;
 			%>
 			<div class="col-lg-4 thumb">
 				<div class="panel panel-default text-center">
-					<div class="panel-heading">
-						<h1><%= "Cluster " + c.getId()%></h1>
+					<div class="panel-heading" title="Cluster ID: <%= c.getId() %>">
+						<h1>Cluster <%= counter %></h1>
 					</div>
 					<div class="panel-body">
 						<%

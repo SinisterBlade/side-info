@@ -19,6 +19,7 @@ import com.app.DocumentScraper;
 import com.app.DocumentStorage;
 import com.app.GoogleLinkRetriever;
 import com.app.KMeans;
+import com.app.Ranker;
 import com.app.VectorSpaceCreator;
 import com.bean.KDocument;
 import com.dao.ConnectionManager;
@@ -56,6 +57,8 @@ public class MainServlet extends HttpServlet {
 		KMeans km = new KMeans(vectors.size(), docList, vectors);
 		ArrayList<Cluster> clusters = km.startKMeaning();
 		System.out.println("Clustering Finished!");
+		Ranker.rankClusters(clusters);
+		Ranker.removeEmpty(clusters);
 		req.setAttribute("clusters", clusters);
 		/*System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
