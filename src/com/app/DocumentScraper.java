@@ -1,6 +1,7 @@
 package com.app;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import org.jsoup.select.Elements;
 public class DocumentScraper {
 	private String url;
 	private Document document;
-	public DocumentScraper(String url) throws UnsupportedMimeTypeException ,UnknownHostException, SSLProtocolException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
+	public DocumentScraper(String url) throws SocketException, UnsupportedMimeTypeException ,UnknownHostException, SSLProtocolException, SSLHandshakeException, SocketTimeoutException, IOException, HttpStatusException {
 		this.url = url;
 		this.document = Jsoup.connect(url).userAgent("Chrome").get();
 	}

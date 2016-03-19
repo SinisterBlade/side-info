@@ -46,6 +46,7 @@ public class MainServlet extends HttpServlet {
 		ArrayList<KDocument> docList = factory.getKDocs();
 		KMeans km = new KMeans(vectors.size(), docList, vectors);
 		ArrayList<Cluster> clusters = km.startKMeaning();
+		System.out.println("Clustering Finished!");
 		req.setAttribute("clusters", clusters);
 		/*System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
@@ -55,6 +56,8 @@ public class MainServlet extends HttpServlet {
 				System.out.println(dao.getURL(doc.getId()));
 			}
 		}*/
+		
+		//req.setAttribute("error", "This error is awesome!");
 		RequestDispatcher rd = req.getRequestDispatcher("result.jsp");
 		rd.forward(req, resp);
 	}

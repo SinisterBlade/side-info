@@ -1,13 +1,8 @@
-<%@page import="com.dao.DAOInterface"%>
-<%@page import="com.bean.KDocument"%>
-<%@page import="com.app.Cluster"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" ">
 	<!-- ****** faviconit.com favicons ****** -->
 	<link rel="shortcut icon" href="assets/icons/orange-slice.ico">
 	<link rel="icon" sizes="16x16 32x32 64x64" href="assets/icons/orange-slice.ico">
@@ -30,8 +25,8 @@
 	<meta name="msapplication-TileImage" content="assets/icons/orange-slice-144.png">
 	<meta name="msapplication-config" content="assets/icons/browserconfig.xml">
 	<!-- ****** faviconit.com favicons ****** -->
-	<title>Results for "<%= request.getParameter("query") %>"</title>
-
+	<title>Error!</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
@@ -49,6 +44,9 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 
 	<style type="text/css">
 
@@ -89,17 +87,6 @@
 			padding: 60px 50px;
 		}
 
-		.logo {
-			color: #f4511e;
-			font-size: 200px;
-		}
-
-		.icon {
-			color: #f4511e;
-			letter-spacing: 1em;
-			font-size: 1.125em;
-		}
-
 		@media screen and (max-width: 768px) {
 			.col-sm-4 {
 				text-align: center;
@@ -107,36 +94,11 @@
 			}
 		}
 
-		.carousel-control.right, .carousel-control.left {
-			background-image: none;
-			color: #f4511e;
-		}
-
-		.carousel-indicators li {
-			border-color: #f4511e;
-		}
-
-		.carousel-indicators li.active {
-			background-color: #f4511e;
-		}
-
-		.item h4 {
-			font-size: 19px;
-			line-height: 1.375em;
-			font-weight: 400;
-			font-style: italic;
-			margin: 70px 0;
-		}
-
-		.item span {
-			font-style: normal;
-		}
-
 		.navbar {
 			font-family: Montserrat, sans-serif;
 			margin-bottom: 0;
 			background-color: #f4511e;
-			z-index: 9999;
+			z-index: 10;
 			border: 0;
 			font-size: 12px !important;
 			line-height: 1.42857143 !important;
@@ -169,129 +131,34 @@
 			color: #f4511e;
 		}
 
-		.panel {
-			border: 1px solid #f4511e;
-			border-radius: 0;
-			transition: box-shadow 0.5s;
-		}
-
-		.panel:hover {
-			box-shadow: 5px 0px 40px rgba(0, 0, 0, .2);
-		}
-
-		.panel-footer.btn:hover {
-			border: 1px solid #f4511e;
-			background-color: #fff !important;
-			color: #f4511e; 
-		}
-
-		.panel-heading {
-			color: #fff !important;
-			background-color: #f4511e !important;
-			padding: 25px;
-			border-bottom: 1px solid transparent;
-			border-top-left-radius: 0px;
-			border-top-right-radius: 0px;
-			border-bottom-left-radius: 0px;
-			border-bottom-right-radius: 0px;
-		}
-
-		.panel-footer {
-			background-color: #fff !important;
-		}
-
-		.panel-footer h3 {
-			font-size: 32px;
-		}
-
-		.panel-footer h4 {
-			color: #aaa;
-			font-size: 14px;
-		}
-
-		.panel-footer .btn {
-			margin: 15px 0;
-			background-color: #f4511e;
-			color: #fff;
-		}
-
-		.list-group-item {
-			word-wrap: break-word;
-		}
-
-		.thumb:nth-child(3n+1) {
-			clear: both;
-		}
-
 	</style>
 
 </head>
-<body id="resultPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-
+<body id="error">
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>				
-				</button>
 				<a class="navbar-brand" href="homepage.html">Orange Juice!</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#clusters">CLUSTERS</a></li>
-				</ul>
 			</div>
 		</div>
 	</nav>
 
 	<div class="jumbotron text-center">
-		<h1>Results</h1>
-		<p>For "<%= request.getParameter("query") %>"</p>
+		<h1><i class="fa fa-frown-o"></i> OOPS!</h1>
+		<p>Looks like something went wrong!</p>
 	</div>
 
-	<div id="clusters" class="container-fluid">
-		<div class="text-center">
-			<h2>Clusters</h2>
-			<p>Pages in the same cluster are supposed to be similar.</p>
-		</div>
+	<div id="error" class="container-fluid bg-grey">
 		<div class="row">
-			<% 
-			DAOInterface dao = (DAOInterface) request.getAttribute("dao");
-			ArrayList<Cluster> clusters = (ArrayList<Cluster>) request.getAttribute("clusters");
-			for(Cluster c : clusters) {
-			%>
-			<div class="col-lg-4 thumb">
-				<div class="panel panel-default text-center">
-					<div class="panel-heading">
-						<h1><%= "Cluster " + c.getId()%></h1>
-					</div>
-					<div class="panel-body">
-						<%
-						ArrayList<KDocument> documents = c.getDocuments();
-						%>
-						<div class="list-group">
-						<%
-						for(KDocument doc : documents) {
-							String url = dao.getURL(doc.getId());
-						%>
-							<a href="<%= url %>" class="list-group-item" target="_blank"><%= url %></a>
-						<%
-						}
-						%>
-						</div>
-					</div>
-				</div>
+			<div class="col-sm-12">
+				<h2>What Happened?</h2>
+				<h4><%= request.getAttribute("error") %></h4>	
 			</div>
-			<%
-			}
-			%>
 		</div>
 	</div>
 
 	<footer class="container-fluid text-center">
-		<a href="#resultPage" title="To Top">
+		<a href="#error" title="To Top">
 			<span class="glyphicon glyphicon-chevron-up"></span>
 		</a>
 	</footer>
@@ -299,7 +166,7 @@
 	<script>
 		$(document).ready(function(){
 		  // Add smooth scrolling to all links in navbar + footer link
-		  $(".navbar-collapse a, footer a[href='#resultPage']").on('click', function(event) {
+		  $("footer a[href='#error']").on('click', function(event) {
 
 		    // Prevent default anchor click behavior
 		    event.preventDefault();
@@ -319,6 +186,5 @@
 		  });
 		})
 	</script>
-
 </body>
 </html>

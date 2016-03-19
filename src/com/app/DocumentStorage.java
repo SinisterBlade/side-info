@@ -1,6 +1,7 @@
 package com.app;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -59,6 +60,9 @@ public class DocumentStorage {
 					}
 					catch (UnsupportedMimeTypeException e) {
 						System.err.println("Unsupported Mime Type: " + url);
+					}
+					catch (SocketException e) {
+						System.err.println("Socket Exception: " + url);
 					}
 				}
 				else {
