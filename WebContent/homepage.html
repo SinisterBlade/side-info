@@ -227,7 +227,7 @@
 		<h1>Orange Juice!</h1>
 		<p>The all new Search Engine</p>
 		<form class="form-inline" method="post" id="query-form" action="mainservlet">
-			<input type="search" class="form-control" size="50" placeholder="Search" name="query" required />
+			<input type="search" class="form-control" size="50" placeholder="Search" name="query" autofocus required />
 			<input type="submit" class="btn btn-danger" value="Search" />
 		</form>
 		<div id="loading" class="loading">
@@ -380,6 +380,11 @@
 		    });
 		  });
 		})
+	</script>
+	<script>
+		$(window).bind("pageshow", function() {
+			$("#loading").css("display", "none");
+		});
 	</script>
 	<script>
 		$("#query-form").submit(function(event) {
