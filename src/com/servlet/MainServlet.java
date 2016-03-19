@@ -24,6 +24,7 @@ import com.bean.KDocument;
 import com.dao.ConnectionManager;
 import com.dao.DAOImpl;
 import com.dao.DAOInterface;
+import com.exception.NoLinksFoundException;
 import com.factory.KDocFactory;
 
 public class MainServlet extends HttpServlet {
@@ -38,7 +39,15 @@ public class MainServlet extends HttpServlet {
 		req.setAttribute("dao", dao);
 		dao.clearTable();
 		GoogleLinkRetriever retriever = new GoogleLinkRetriever();
-		ArrayList<String> links = retriever.getLinks(query);
+		ArrayList<String> links;
+		try {
+			links = retriever.getLinks(query);
+		} catch (NoLinksFoundException e) {
+			req.setAttribute("error", e.getMessage());
+			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+			rd.forward(req, resp);
+			return;
+		}
 		DocumentStorage dStorage = new DocumentStorage(dao);
 		dStorage.getAndStore(0, links, 3);
 		ArrayList<String> vectors = (ArrayList<String>) new VectorSpaceCreator(query).getVectorSpace();

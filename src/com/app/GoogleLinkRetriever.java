@@ -11,6 +11,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.exception.NoLinksFoundException;
+
 
 
 public class GoogleLinkRetriever {
@@ -22,7 +24,7 @@ public class GoogleLinkRetriever {
 		startPage = "&start=0";
 		googleSearch = "http://www.google.com/search?q=";
 	}
-	public  ArrayList<String> getLinks(String query) throws IOException {
+	public  ArrayList<String> getLinks(String query) throws IOException, NoLinksFoundException {
 		links = new ArrayList<String>();
 		Document doc = Jsoup.connect(googleSearch + query).userAgent("Chrome").get();
 		Elements elements = doc.select(".r a");
@@ -35,6 +37,9 @@ public class GoogleLinkRetriever {
 				System.out.println("URL: " + url);
 				links.add(url);
 			}
+		}
+		if(links.isEmpty()) {
+			throw new NoLinksFoundException(query);
 		}
 		return links;
 	}
