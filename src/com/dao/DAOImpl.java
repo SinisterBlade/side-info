@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.exception.DatabaseException;
+
 
 public class DAOImpl implements DAOInterface {
 	Connection con;
@@ -32,7 +34,7 @@ public class DAOImpl implements DAOInterface {
 	}
 	
 	@Override
-	public void clearTable() {
+	public void clearTable() throws DatabaseException {
 		try {
 			PreparedStatement ps = con.prepareStatement("truncate table links");
 			ps.executeUpdate();
@@ -43,7 +45,7 @@ public class DAOImpl implements DAOInterface {
 			ps.close();
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 	

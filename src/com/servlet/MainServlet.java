@@ -1,21 +1,16 @@
 package com.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.Cluster;
-import com.app.DocumentScraper;
 import com.app.DocumentStorage;
 import com.app.GoogleLinkRetriever;
 import com.app.KMeans;
@@ -25,7 +20,8 @@ import com.bean.KDocument;
 import com.dao.ConnectionManager;
 import com.dao.DAOImpl;
 import com.dao.DAOInterface;
-import com.exception.NoLinksFoundException;
+import com.exception.CannotInitializeDatabaseException;
+import com.exception.DatabaseException;
 import com.factory.KDocFactory;
 
 public class MainServlet extends HttpServlet {
@@ -35,15 +31,21 @@ public class MainServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("In Main Servlet");
-		PrintWriter out = resp.getWriter();
 		String query = req.getParameter("query");
 		req.setAttribute("dao", dao);
-		dao.clearTable();
+		try {
+			dao.clearTable();
+		} catch (DatabaseException e) {
+			req.setAttribute("error", e.getMessage());
+			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+			rd.forward(req, resp);
+			return;
+		}
 		GoogleLinkRetriever retriever = new GoogleLinkRetriever();
 		ArrayList<String> links;
 		try {
 			links = retriever.getLinks(query);
-		} catch (NoLinksFoundException e) {
+		} catch (Exception e) {
 			req.setAttribute("error", e.getMessage());
 			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
 			rd.forward(req, resp);
@@ -75,9 +77,14 @@ public class MainServlet extends HttpServlet {
 	}
 	
 	@Override
-	public void init() throws ServletException {
+	public void init() {
 		ConnectionManager cm = (ConnectionManager)getServletContext().getAttribute("connection");
-		Connection con = cm.getConnection();
+		Connection con = null;
+		try {
+			con = cm.getConnection();
+		} catch (CannotInitializeDatabaseException e) {
+			e.printStackTrace();
+		}
 		System.out.println(con);
 		dao = new DAOImpl(con);
 	}

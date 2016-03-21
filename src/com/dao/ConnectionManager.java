@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.exception.CannotInitializeDatabaseException;
+
 public class ConnectionManager {
 	String driver, url, username, password;
 	
@@ -14,16 +16,15 @@ public class ConnectionManager {
 		this.password = password;
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws CannotInitializeDatabaseException {
 		try {
 			Class.forName(driver);
 			Connection con = DriverManager.getConnection(url, username, password);
 			return con;
 		} catch(SQLException e) {
-			e.printStackTrace();
+			throw new CannotInitializeDatabaseException();
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			throw new CannotInitializeDatabaseException();
 		}
-		return null;
 	}
 }
