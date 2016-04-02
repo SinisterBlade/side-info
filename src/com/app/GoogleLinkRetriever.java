@@ -49,9 +49,4 @@ public class GoogleLinkRetriever {
 		}
 		return links;
 	}
-	
-	public  ArrayList<String> getLinksFromPage(String query, int page) {
-		// TODO
-		return null;
-	}
 }

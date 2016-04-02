@@ -22,6 +22,8 @@ import com.dao.DAOImpl;
 import com.dao.DAOInterface;
 import com.exception.CannotInitializeDatabaseException;
 import com.exception.DatabaseException;
+import com.exception.InternetConnectionException;
+import com.exception.NoLinksFoundException;
 import com.factory.KDocFactory;
 
 public class MainServlet extends HttpServlet {
@@ -45,7 +47,7 @@ public class MainServlet extends HttpServlet {
 		ArrayList<String> links;
 		try {
 			links = retriever.getLinks(query);
-		} catch (Exception e) {
+		} catch (NoLinksFoundException | InternetConnectionException e) {
 			req.setAttribute("error", e.getMessage());
 			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
 			rd.forward(req, resp);
