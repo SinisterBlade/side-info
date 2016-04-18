@@ -30,13 +30,14 @@ public class DocumentScraper {
 		return document.html();
 	}
 	
-	public ArrayList<String> getAllParagraphs() {
+	public String getAllParagraphs() {
 		Elements paragraphElements = document.select("p");
-		ArrayList<String> paragraphs = new ArrayList<String>();
+		StringBuilder content = new StringBuilder();
 		for (Element p : paragraphElements) {
-			paragraphs.add(p.text());
+			content.append(p.text());
+			content.append("\n");
 		}
-		return paragraphs;
+		return content.toString();
 	}
 	
 	public String getFirstParagraph() {
@@ -49,9 +50,12 @@ public class DocumentScraper {
 	}
 	
 	public ArrayList<String> getLinksFromFirstParagraph() {
-		Element firstPara = document.select("p").first();
-		Elements links = firstPara.select("a[href]");
 		ArrayList<String> linkArray = new ArrayList<String>();
+		Element firstPara = document.select("p").first();
+		if (firstPara == null) {
+			return linkArray;
+		}
+		Elements links = firstPara.select("a[href]");
 		String pattern = "(http[^#\\n]*)";
 		Pattern r = Pattern.compile(pattern);	
 		for (Element link : links) {
@@ -65,11 +69,22 @@ public class DocumentScraper {
 	}
 	
 	public ArrayList<String> getAllLinks() {
-		Elements links = document.select("a[href]");
 		ArrayList<String> linkArray = new ArrayList<String>();
-		for (Element link : links) {
-			System.out.println(link.attr("abs:href"));
-			linkArray.add(link.attr("abs:href"));
+		Elements paragraphElements = document.select("p");
+		if (paragraphElements == null) {
+			return linkArray;
+		}
+		for (Element p : paragraphElements) {
+			Elements links = p.select("a[href]");
+			String pattern = "(http[^#\\n]*)";
+			Pattern r = Pattern.compile(pattern);	
+			for (Element link : links) {
+				Matcher m = r.matcher(link.attr("abs:href"));
+				if(m.find()) {
+					String baseUrl = m.group(1);
+					linkArray.add(baseUrl);
+				}
+			}
 		}
 		return linkArray;
 	}

@@ -30,12 +30,14 @@ public class DocumentStorage {
 				if(!dao.linkExists(url)) {
 					try {
 						DocumentScraper ds = new DocumentScraper(url);
-						String content = ds.getFirstParagraph();
+						String content = ds.getAllParagraphs();
+						//String content = ds.getFirstParagraph();
 						if (content != null) {
 							content = content.toLowerCase();
 							dao.addLink(url, content, refid);
 							int id = dao.getId(url);
 							System.out.println("Added link: " + url);
+							//ArrayList<String> subLinks = ds.getAllLinks();
 							ArrayList<String> subLinks = ds.getLinksFromFirstParagraph();
 							getAndStore(id, subLinks, depth - 1);
 						}
