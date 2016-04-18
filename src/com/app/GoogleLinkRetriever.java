@@ -1,6 +1,7 @@
 package com.app;
 
 import java.io.IOException;
+import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,7 +45,7 @@ public class GoogleLinkRetriever {
 			if(links.isEmpty()) {
 				throw new NoLinksFoundException(query);
 			}
-		} catch (UnknownHostException e) {
+		} catch (UnknownHostException | NoRouteToHostException e) {
 			throw new InternetConnectionException();
 		}
 		return links;
