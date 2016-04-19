@@ -67,7 +67,7 @@ public class KMeans {
 			double min = MAX_DISTANCE;
 			Cluster minDistanceCluster = null;
 			for (Cluster cluster : clusters) {
-				double distance = calculateDistance(doc, cluster);
+				double distance = calculateEuclideanDistance(doc, cluster);
 				if (distance < min) {
 					min = distance;
 					minDistanceCluster = cluster;
@@ -94,7 +94,7 @@ public class KMeans {
 	}
 	
 	
-	private double calculateDistance(KDocument doc, Cluster cluster) {
+	private double calculateEuclideanDistance(KDocument doc, Cluster cluster) {
 		HashMap<String, Double> vector1 = doc.getTfIdf();
 		HashMap<String, Double> vector2 = cluster.getCentroid();
 		double sumOfSquares = 0;
@@ -103,6 +103,27 @@ public class KMeans {
 			sumOfSquares += (vectorDifference * vectorDifference);
 		}
 		return Math.sqrt(sumOfSquares);
+	}
+	
+	private double calculateCosineDistance (KDocument doc, Cluster cluster) {
+		HashMap<String, Double> vector1 = doc.getTfIdf();
+		HashMap<String, Double> vector2 = cluster.getCentroid();
+		double dotProduct = 0;
+		double magnitudeOfVector1 = 0;
+		double magnitudeOfVector2 = 0;
+		for (String term: vectors) {
+			double termOfVector1 = vector1.get(term);
+			double termOfVector2 = vector2.get(term);
+			dotProduct += (termOfVector1 * termOfVector2);
+			magnitudeOfVector1 += (termOfVector1 * termOfVector1);
+			magnitudeOfVector2 += (termOfVector2 * termOfVector2);
+		}
+		magnitudeOfVector1 = Math.sqrt(magnitudeOfVector1);
+		magnitudeOfVector2 = Math.sqrt(magnitudeOfVector2);
+		if (magnitudeOfVector1 == 0 || magnitudeOfVector2 == 0 || dotProduct == 0) {
+			return 0;
+		}
+		return 1 - (dotProduct / (magnitudeOfVector1 * magnitudeOfVector2));
 	}
 	
 	private void assignCluster(KDocument doc, Cluster cluster) {
