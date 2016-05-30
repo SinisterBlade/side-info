@@ -6,6 +6,11 @@ import java.util.Iterator;
 
 import com.app.Cluster;
 
+/**
+ * Specifies how 2 clusters are supposed to be compared
+ * @author Rajat
+ *
+ */
 public class ClusterComparator implements Comparator<Cluster> {
 
 	@Override
@@ -22,6 +27,9 @@ public class ClusterComparator implements Comparator<Cluster> {
 		while(iterator2.hasNext()) {
 			totalTfIdf2 += iterator2.next(); 
 		}
+		//System.out.println("Cluster " + c1.getId() + ": " + totalTfIdf1);
+		//System.out.println("Cluster " + c2.getId() + ": " + totalTfIdf2);
+		
 		
 		//Second cluster before first for descending order
 		return Double.compare(totalTfIdf2, totalTfIdf1);		

@@ -6,6 +6,11 @@ import javax.servlet.ServletContextListener;
 
 import com.dao.ConnectionManager;
 
+/**
+ * Initializes an instance of {@link com.dao.ConnectionManager} when Servlet Context is initialized
+ * @author Rajat
+ *
+ */
 public class DatabaseContextListener implements ServletContextListener {
 
 	@Override

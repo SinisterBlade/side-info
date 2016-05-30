@@ -18,6 +18,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Class that used JSoup library to scrape web documents
+ * @author Rajat
+ * 
+ *
+ */
 public class DocumentScraper {
 	private String url;
 	private Document document;
@@ -26,10 +32,18 @@ public class DocumentScraper {
 		this.document = Jsoup.connect(url).userAgent("Chrome").get();
 	}
 	
+	/**
+	 * 
+	 * @return Entire HTML of page
+	 */
 	public String getHTML() {
 		return document.html();
 	}
 	
+	/**
+	 * 
+	 * @return All content in all paragraph tags of web document
+	 */
 	public String getAllParagraphs() {
 		Elements paragraphElements = document.select("p");
 		StringBuilder content = new StringBuilder();
@@ -40,6 +54,10 @@ public class DocumentScraper {
 		return content.toString();
 	}
 	
+	/**
+	 * 
+	 * @return Content of the first paragraph tag in the web document
+	 */
 	public String getFirstParagraph() {
 		Element paragraphElement = document.select("p").first();
 		if (paragraphElement != null) {
@@ -49,6 +67,10 @@ public class DocumentScraper {
 		else return null;
 	}
 	
+	/**
+	 * 
+	 * @return All hyperlinks in the first paragraph tag of web document
+	 */
 	public ArrayList<String> getLinksFromFirstParagraph() {
 		ArrayList<String> linkArray = new ArrayList<String>();
 		Element firstPara = document.select("p").first();
@@ -68,6 +90,10 @@ public class DocumentScraper {
 		return linkArray;
 	}
 	
+	/**
+	 * 
+	 * @return All hyperlinks in all paragraph elements in the web document
+	 */
 	public ArrayList<String> getAllLinks() {
 		ArrayList<String> linkArray = new ArrayList<String>();
 		Elements paragraphElements = document.select("p");

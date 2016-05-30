@@ -41,16 +41,18 @@
 	<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
 
 	<!-- Optional theme -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
 
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="assets/jquery-1.12.4.min.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="assets/font-awesome-4.6.3/css/font-awesome.min.css">
 
 	<style type="text/css">
 
@@ -181,12 +183,6 @@
 			box-shadow: 5px 0px 40px rgba(0, 0, 0, .2);
 		}
 
-		.panel-footer.btn:hover {
-			border: 1px solid #f4511e;
-			background-color: #fff !important;
-			color: #f4511e; 
-		}
-
 		.panel-heading {
 			color: #fff !important;
 			background-color: #f4511e !important;
@@ -215,6 +211,12 @@
 			margin: 15px 0;
 			background-color: #f4511e;
 			color: #fff;
+		}
+
+		.panel-footer .btn:hover {
+			border: 1px solid #f4511e;
+			background-color: #fff !important;
+			color: #f4511e; 
 		}
 
 		.list-group-item {
@@ -261,7 +263,7 @@
 		<div class="row">
 			<% 
 			DAOInterface dao = (DAOInterface) request.getAttribute("dao");
-			ArrayList<Cluster> clusters = (ArrayList<Cluster>) request.getAttribute("clusters");
+			ArrayList<Cluster> clusters = (ArrayList<Cluster>) session.getAttribute("clusters");
 			int counter = 0;
 			for(Cluster c : clusters) {
 			counter++;
@@ -285,6 +287,12 @@
 						}
 						%>
 						</div>
+					</div>
+					<div class="panel-footer">
+						<form action="aggregateservlet" method="post">
+							<input type="hidden" name="clusterid" value="<%= c.getId() %>" />
+							<input type="submit" name="submit" value="View" class="btn btn-danger btn-lg" />
+						</form>
 					</div>
 				</div>
 			</div>

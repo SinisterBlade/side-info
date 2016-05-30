@@ -26,9 +26,21 @@ import com.exception.InternetConnectionException;
 import com.exception.NoLinksFoundException;
 import com.factory.KDocFactory;
 
+/**
+ * Servlet that acts as the central controller for the application
+ * @author Rajat
+ *
+ */
 public class MainServlet extends HttpServlet {
 	
 	DAOInterface dao;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("error", "Please use page navigation instead of manually entering the URL!");
+		RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+		rd.forward(req, resp);
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -63,7 +75,7 @@ public class MainServlet extends HttpServlet {
 		System.out.println("Clustering Finished!");
 		Ranker.rankClusters(clusters);
 		Ranker.removeEmpty(clusters);
-		req.setAttribute("clusters", clusters);
+		req.getSession().setAttribute("clusters", clusters);
 		/*System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
 			System.out.println("Cluster " + c.getId() + ":");
@@ -73,7 +85,7 @@ public class MainServlet extends HttpServlet {
 			}
 		}*/
 		
-		//req.setAttribute("error", "This error is awesome!");
+		//req.setAttribute("error", "This error is awesome!");*/
 		RequestDispatcher rd = req.getRequestDispatcher("result.jsp");
 		rd.forward(req, resp);
 	}

@@ -8,10 +8,18 @@ import java.sql.SQLException;
 
 import com.exception.DatabaseException;
 
-
+/**
+ * Class that implements all database operations to be used by the application
+ * @author Rajat
+ *
+ */
 public class DAOImpl implements DAOInterface {
 	Connection con;
 	
+	/**
+	 * 
+	 * @param con Connection to the database
+	 */
 	public DAOImpl(Connection con) {
 		this.con = con;
 	}
@@ -165,6 +173,27 @@ public class DAOImpl implements DAOInterface {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public String getContent(int id) {
+		try {
+			PreparedStatement ps = con.prepareStatement("select content from links where id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Clob content = rs.getClob(1);
+				String text = content.getSubString(1, (int)content.length());
+				return text;
+			}
+			else{
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 }

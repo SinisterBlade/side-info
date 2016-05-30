@@ -16,17 +16,30 @@ import org.jsoup.select.Elements;
 import com.exception.InternetConnectionException;
 import com.exception.NoLinksFoundException;
 
-
-
+/**
+ * Class to fetch links from Google
+ * @author Rajat
+ *
+ */
 public class GoogleLinkRetriever {
 	private  ArrayList<String> links;
 	private  String startPage;
 	private  String googleSearch;
+	
 	public GoogleLinkRetriever() {
 		links = new ArrayList<String>();
 		startPage = "&start=0";
 		googleSearch = "http://www.google.com/search?q=";
 	}
+	
+	/**
+	 * 
+	 * @param query Query to be searched
+	 * @return List of links from Google for specified query
+	 * @throws IOException
+	 * @throws NoLinksFoundException
+	 * @throws InternetConnectionException
+	 */
 	public  ArrayList<String> getLinks(String query) throws IOException, NoLinksFoundException, InternetConnectionException {
 		links = new ArrayList<String>();
 		try {

@@ -1,5 +1,10 @@
 package com.exception;
 
+/**
+ * Exception is thrown when the given query does not find any links
+ * @author Rajat
+ *
+ */
 public class NoLinksFoundException extends Exception {
 	
 	private String query;
