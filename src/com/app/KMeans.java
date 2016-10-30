@@ -6,6 +6,11 @@ import java.util.Iterator;
 
 import com.bean.KDocument;
 
+/**
+ * Class contains all logic for clustering {@link com.bean.KDocument KDocuments} using KMeans 
+ * @author Rajat
+ *
+ */
 public class KMeans {
 	final static double MAX_DISTANCE = 99999999;
 	int totalDocuments;
@@ -24,6 +29,10 @@ public class KMeans {
 		clusterMap = new HashMap<Integer, Cluster>();
 	}
 	
+	/**
+	 * Method to be called to start the clustering process
+	 * @return List of {@link com.app.Cluster Clusters}
+	 */
 	public ArrayList<Cluster> startKMeaning() {
 		initialize();
 		//printClusters();
@@ -36,7 +45,9 @@ public class KMeans {
 		return clusters;
 	}
 	
-	//Initialisation Method: Random Partition
+	/**
+	 * Initializes the KMeans clustering using Random Partition method
+	 */
 	private void initialize() {
 		int documentsInEachCluster = (totalDocuments / k) + 1;
 		Iterator<KDocument> iter = docList.iterator();
@@ -55,6 +66,10 @@ public class KMeans {
 		}
 	}
 	
+	/**
+	 * Steps to be performed on each iteration of KMeans
+	 * @return True if clusters have converged
+	 */
 	private boolean update() {
 		boolean converged = true;
 		//Calculate centroids
@@ -67,7 +82,7 @@ public class KMeans {
 			double min = MAX_DISTANCE;
 			Cluster minDistanceCluster = null;
 			for (Cluster cluster : clusters) {
-				double distance = calculateDistance(doc, cluster);
+				double distance = calculateEuclideanDistance(doc, cluster);
 				if (distance < min) {
 					min = distance;
 					minDistanceCluster = cluster;
@@ -93,8 +108,13 @@ public class KMeans {
 		return converged;
 	}
 	
-	
-	private double calculateDistance(KDocument doc, Cluster cluster) {
+	/**
+	 * Calculates Euclidean distance between specified document and cluster centroid
+	 * @param doc 
+	 * @param cluster
+	 * @return Distance between the Document and Cluster
+	 */
+	private double calculateEuclideanDistance(KDocument doc, Cluster cluster) {
 		HashMap<String, Double> vector1 = doc.getTfIdf();
 		HashMap<String, Double> vector2 = cluster.getCentroid();
 		double sumOfSquares = 0;
@@ -105,11 +125,46 @@ public class KMeans {
 		return Math.sqrt(sumOfSquares);
 	}
 	
+	/**
+	 * Calculates Cosine distance between specified document and cluster centroid
+	 * @param doc
+	 * @param cluster
+	 * @return Distance between the Document and Cluster
+	 */
+	private double calculateCosineDistance (KDocument doc, Cluster cluster) {
+		HashMap<String, Double> vector1 = doc.getTfIdf();
+		HashMap<String, Double> vector2 = cluster.getCentroid();
+		double dotProduct = 0;
+		double magnitudeOfVector1 = 0;
+		double magnitudeOfVector2 = 0;
+		for (String term: vectors) {
+			double termOfVector1 = vector1.get(term);
+			double termOfVector2 = vector2.get(term);
+			dotProduct += (termOfVector1 * termOfVector2);
+			magnitudeOfVector1 += (termOfVector1 * termOfVector1);
+			magnitudeOfVector2 += (termOfVector2 * termOfVector2);
+		}
+		magnitudeOfVector1 = Math.sqrt(magnitudeOfVector1);
+		magnitudeOfVector2 = Math.sqrt(magnitudeOfVector2);
+		if (magnitudeOfVector1 == 0 || magnitudeOfVector2 == 0 || dotProduct == 0) {
+			return 0;
+		}
+		return 1 - (dotProduct / (magnitudeOfVector1 * magnitudeOfVector2));
+	}
+	
+	/**
+	 * Assign a document to some cluster
+	 * @param doc
+	 * @param cluster
+	 */
 	private void assignCluster(KDocument doc, Cluster cluster) {
 		cluster.addDocument(doc);
 		doc.setClusterID(cluster.getId());
 	}
 	
+	/**
+	 * Pretty print all clusters
+	 */
 	private void printClusters() {
 		for (Cluster c : clusters) {
 			c.listDocuments();

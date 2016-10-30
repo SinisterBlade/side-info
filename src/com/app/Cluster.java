@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 import com.bean.KDocument;
 
+/**
+ * This class represents a cluster of documents with their centroid calculated
+ * on the basis of TF-IDF
+ * @author Rajat
+ *
+ */
 public class Cluster {
 	private int id;
 	private ArrayList<KDocument> documents;
@@ -18,11 +24,19 @@ public class Cluster {
 		this.vectors = vectors;
 	}
 	
+	/**
+	 * Add document to cluster
+	 * @param doc KDocument
+	 */
 	public void addDocument(KDocument doc) {
 		documents.add(doc);
 		//System.out.println("Added document " + doc.getId() + " to cluster " + id);
 	}
 	
+	/**
+	 * Remove document from cluster
+	 * @param docID ID of KDocument to be deleted
+	 */
 	public void removeDocument(int docID) {
 		boolean isRemoved = false;
 		for (KDocument d : documents) {
@@ -37,6 +51,9 @@ public class Cluster {
 		}
 	}
 	
+	/**
+	 * Calculate centroid of cluster
+	 */
 	public void calculateCentroid() {
 		int size = documents.size();
 		if(size > 0) {
@@ -58,6 +75,9 @@ public class Cluster {
 		}
 	}
 	
+	/**
+	 * Pretty print all documents in cluster
+	 */
 	public void listDocuments() {
 		System.out.println("Cluster " + id + ":");
 		for(KDocument doc : documents) {

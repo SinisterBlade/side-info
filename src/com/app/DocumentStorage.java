@@ -16,13 +16,29 @@ import org.jsoup.UnsupportedMimeTypeException;
 import com.dao.DAOImpl;
 import com.dao.DAOInterface;
 
+/**
+ * Class that gets web documents and stores its contents in the database
+ * @author Rajat
+ *
+ */
 public class DocumentStorage {
 	DAOInterface dao;
 	
+	/**
+	 * 
+	 * @param dao Allows interaction with the database
+	 */
 	public DocumentStorage(DAOInterface dao) {
 		this.dao = dao;
 	}
 	
+	/**
+	 * 
+	 * @param refid ID of the document from where the current links were obtained
+	 * @param links List of links to fetch and store
+	 * @param depth Current depth of the hierarchical tree initialized as the depth to be searched with
+	 * @throws IOException
+	 */
 	public void getAndStore(int refid, ArrayList<String> links, int depth) throws IOException {
 		if(depth > 0) {
 			System.out.println("Links at depth " + depth + ": " + links.size());
@@ -30,12 +46,14 @@ public class DocumentStorage {
 				if(!dao.linkExists(url)) {
 					try {
 						DocumentScraper ds = new DocumentScraper(url);
-						String content = ds.getFirstParagraph();
+						String content = ds.getAllParagraphs();
+						//String content = ds.getFirstParagraph();
 						if (content != null) {
 							content = content.toLowerCase();
 							dao.addLink(url, content, refid);
 							int id = dao.getId(url);
 							System.out.println("Added link: " + url);
+							//ArrayList<String> subLinks = ds.getAllLinks();
 							ArrayList<String> subLinks = ds.getLinksFromFirstParagraph();
 							getAndStore(id, subLinks, depth - 1);
 						}

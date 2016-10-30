@@ -1,44 +1,70 @@
 package com.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.Cluster;
-import com.app.DocumentScraper;
 import com.app.DocumentStorage;
 import com.app.GoogleLinkRetriever;
 import com.app.KMeans;
+import com.app.Ranker;
 import com.app.VectorSpaceCreator;
 import com.bean.KDocument;
 import com.dao.ConnectionManager;
 import com.dao.DAOImpl;
 import com.dao.DAOInterface;
+import com.exception.CannotInitializeDatabaseException;
+import com.exception.DatabaseException;
+import com.exception.InternetConnectionException;
+import com.exception.NoLinksFoundException;
 import com.factory.KDocFactory;
 
+/**
+ * Servlet that acts as the central controller for the application
+ * @author Rajat
+ *
+ */
 public class MainServlet extends HttpServlet {
 	
 	DAOInterface dao;
 	
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("error", "Please use page navigation instead of manually entering the URL!");
+		RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+		rd.forward(req, resp);
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("In Main Servlet");
-		PrintWriter out = resp.getWriter();
 		String query = req.getParameter("query");
 		req.setAttribute("dao", dao);
-		dao.clearTable();
+		try {
+			dao.clearTable();
+		} catch (DatabaseException e) {
+			req.setAttribute("error", e.getMessage());
+			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+			rd.forward(req, resp);
+			return;
+		}
 		GoogleLinkRetriever retriever = new GoogleLinkRetriever();
-		ArrayList<String> links = retriever.getLinks(query);
+		ArrayList<String> links;
+		try {
+			links = retriever.getLinks(query);
+		} catch (NoLinksFoundException | InternetConnectionException e) {
+			req.setAttribute("error", e.getMessage());
+			RequestDispatcher rd = req.getRequestDispatcher("error.jsp");
+			rd.forward(req, resp);
+			return;
+		}
 		DocumentStorage dStorage = new DocumentStorage(dao);
 		dStorage.getAndStore(0, links, 3);
 		ArrayList<String> vectors = (ArrayList<String>) new VectorSpaceCreator(query).getVectorSpace();
@@ -47,7 +73,9 @@ public class MainServlet extends HttpServlet {
 		KMeans km = new KMeans(vectors.size(), docList, vectors);
 		ArrayList<Cluster> clusters = km.startKMeaning();
 		System.out.println("Clustering Finished!");
-		req.setAttribute("clusters", clusters);
+		Ranker.rankClusters(clusters);
+		Ranker.removeEmpty(clusters);
+		req.getSession().setAttribute("clusters", clusters);
 		/*System.out.println("Final clusters:");
 		for(Cluster c : clusters) {
 			System.out.println("Cluster " + c.getId() + ":");
@@ -57,15 +85,20 @@ public class MainServlet extends HttpServlet {
 			}
 		}*/
 		
-		//req.setAttribute("error", "This error is awesome!");
+		//req.setAttribute("error", "This error is awesome!");*/
 		RequestDispatcher rd = req.getRequestDispatcher("result.jsp");
 		rd.forward(req, resp);
 	}
 	
 	@Override
-	public void init() throws ServletException {
+	public void init() {
 		ConnectionManager cm = (ConnectionManager)getServletContext().getAttribute("connection");
-		Connection con = cm.getConnection();
+		Connection con = null;
+		try {
+			con = cm.getConnection();
+		} catch (CannotInitializeDatabaseException e) {
+			e.printStackTrace();
+		}
 		System.out.println(con);
 		dao = new DAOImpl(con);
 	}

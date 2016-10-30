@@ -4,26 +4,26 @@
 <html>
 <head>
 	<!-- ****** faviconit.com favicons ****** -->
-	<link rel="shortcut icon" href="assets/icons/orange-slice.ico">
-	<link rel="icon" sizes="16x16 32x32 64x64" href="assets/icons/orange-slice.ico">
-	<link rel="icon" type="image/png" sizes="196x196" href="assets/icons/orange-slice-192.png">
-	<link rel="icon" type="image/png" sizes="160x160" href="assets/icons/orange-slice-160.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="assets/icons/orange-slice-96.png">
-	<link rel="icon" type="image/png" sizes="64x64" href="assets/icons/orange-slice-64.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/orange-slice-32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/orange-slice-16.png">
-	<link rel="apple-touch-icon" href="assets/icons/orange-slice-57.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="assets/icons/orange-slice-114.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="assets/icons/orange-slice-72.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="assets/icons/orange-slice-144.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="assets/icons/orange-slice-60.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="assets/icons/orange-slice-120.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="assets/icons/orange-slice-76.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="assets/icons/orange-slice-152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/orange-slice-180.png">
+	<link rel="shortcut icon" href="assets/icon/orange-juice.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="assets/icon/orange-juice.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="assets/icon/orange-juice-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="assets/icon/orange-juice-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/icon/orange-juice-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="assets/icon/orange-juice-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/icon/orange-juice-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/icon/orange-juice-16.png">
+	<link rel="apple-touch-icon" href="assets/icon/orange-juice-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="assets/icon/orange-juice-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="assets/icon/orange-juice-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="assets/icon/orange-juice-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="assets/icon/orange-juice-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/icon/orange-juice-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/icon/orange-juice-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/icon/orange-juice-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/icon/orange-juice-180.png">
 	<meta name="msapplication-TileColor" content="#FFFFFF">
-	<meta name="msapplication-TileImage" content="assets/icons/orange-slice-144.png">
-	<meta name="msapplication-config" content="assets/icons/browserconfig.xml">
+	<meta name="msapplication-TileImage" content="assets/icon/orange-juice-144.png">
+	<meta name="msapplication-config" content="assets/icon/browserconfig.xml">
 	<!-- ****** faviconit.com favicons ****** -->
 	<title>Error!</title>
 	<meta charset="utf-8">
@@ -34,18 +34,18 @@
 	<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
 
 	<!-- Optional theme -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
 
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="assets/jquery-1.12.4.min.js"></script>
 
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/font-awesome-4.6.3/css/font-awesome.min.css">
 
 
 	<style type="text/css">

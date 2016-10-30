@@ -2,13 +2,17 @@ package com.bean;
 
 import java.util.HashMap;
 
+/**
+ * Class that stores text document in a numeric format using TF-IDF
+ * @author Rajat
+ *
+ */
 public class KDocument {
 	private int id;
 	private HashMap<String, Double> tfIdf;
 	private int clusterID;
 	
 	public KDocument(int id) {
-		// TODO Auto-generated constructor stub
 		tfIdf = new HashMap<String, Double>();
 		this.id = id;
 	}

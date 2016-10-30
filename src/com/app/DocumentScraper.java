@@ -18,6 +18,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Class that used JSoup library to scrape web documents
+ * @author Rajat
+ * 
+ *
+ */
 public class DocumentScraper {
 	private String url;
 	private Document document;
@@ -26,19 +32,32 @@ public class DocumentScraper {
 		this.document = Jsoup.connect(url).userAgent("Chrome").get();
 	}
 	
+	/**
+	 * 
+	 * @return Entire HTML of page
+	 */
 	public String getHTML() {
 		return document.html();
 	}
 	
-	public ArrayList<String> getAllParagraphs() {
+	/**
+	 * 
+	 * @return All content in all paragraph tags of web document
+	 */
+	public String getAllParagraphs() {
 		Elements paragraphElements = document.select("p");
-		ArrayList<String> paragraphs = new ArrayList<String>();
+		StringBuilder content = new StringBuilder();
 		for (Element p : paragraphElements) {
-			paragraphs.add(p.text());
+			content.append(p.text());
+			content.append("\n");
 		}
-		return paragraphs;
+		return content.toString();
 	}
 	
+	/**
+	 * 
+	 * @return Content of the first paragraph tag in the web document
+	 */
 	public String getFirstParagraph() {
 		Element paragraphElement = document.select("p").first();
 		if (paragraphElement != null) {
@@ -48,10 +67,17 @@ public class DocumentScraper {
 		else return null;
 	}
 	
+	/**
+	 * 
+	 * @return All hyperlinks in the first paragraph tag of web document
+	 */
 	public ArrayList<String> getLinksFromFirstParagraph() {
-		Element firstPara = document.select("p").first();
-		Elements links = firstPara.select("a[href]");
 		ArrayList<String> linkArray = new ArrayList<String>();
+		Element firstPara = document.select("p").first();
+		if (firstPara == null) {
+			return linkArray;
+		}
+		Elements links = firstPara.select("a[href]");
 		String pattern = "(http[^#\\n]*)";
 		Pattern r = Pattern.compile(pattern);	
 		for (Element link : links) {
@@ -64,12 +90,27 @@ public class DocumentScraper {
 		return linkArray;
 	}
 	
+	/**
+	 * 
+	 * @return All hyperlinks in all paragraph elements in the web document
+	 */
 	public ArrayList<String> getAllLinks() {
-		Elements links = document.select("a[href]");
 		ArrayList<String> linkArray = new ArrayList<String>();
-		for (Element link : links) {
-			System.out.println(link.attr("abs:href"));
-			linkArray.add(link.attr("abs:href"));
+		Elements paragraphElements = document.select("p");
+		if (paragraphElements == null) {
+			return linkArray;
+		}
+		for (Element p : paragraphElements) {
+			Elements links = p.select("a[href]");
+			String pattern = "(http[^#\\n]*)";
+			Pattern r = Pattern.compile(pattern);	
+			for (Element link : links) {
+				Matcher m = r.matcher(link.attr("abs:href"));
+				if(m.find()) {
+					String baseUrl = m.group(1);
+					linkArray.add(baseUrl);
+				}
+			}
 		}
 		return linkArray;
 	}

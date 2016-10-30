@@ -18,6 +18,14 @@
   <servlet-name>mainservlet</servlet-name>
   <url-pattern>/mainservlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+  <servlet-name>aggregateservlet</servlet-name>
+  <servlet-class>com.servlet.AggregateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>aggregateservlet</servlet-name>
+  <url-pattern>/aggregateservlet</url-pattern>
+  </servlet-mapping>
   <context-param>
     <param-name>driver</param-name>
     <param-value>oracle.jdbc.driver.OracleDriver</param-value>
